@@ -1,0 +1,2 @@
+# LeetCode_java
+记录平常刷LeetCode题的一些思路及想法
