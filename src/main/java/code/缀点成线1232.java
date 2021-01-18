@@ -9,28 +9,17 @@ public class 缀点成线1232 {
 
     public static boolean checkStraightLine(int[][] coordinates) {
 
-        //防止除0 ；所以判断(y1-y0)*(xi-x0)==(x1-x0)*(yi-y0)  x1 * y2 - y1 * x2 ！=0
-//        int minus = (coordinates[1][1] - coordinates[0][1]) / (coordinates[1][0] - coordinates[0][0]);
-        int minus = (coordinates[1][1] * coordinates[0][1]) - (coordinates[1][0] - coordinates[0][0]);
-        int l = coordinates.length - 1;
-        for (int i = 1; i < coordinates.length; i++) {
-            //判断是否都在同一横坐标上；
-            if (coordinates[i - 1][0] == coordinates[i][0]) {
-                l--;
-                continue;
+        //防止除0 ；即不用判断斜率公式 (y3-y2) / (x3-x2)  ?= (y2-y1) / (x2-x1)
+        // 所以改成乘法判断(y3-y2)*(x2-x1) ?=(y2-y1)* (x3-x2) 即可
+        for (int i = 1; i < coordinates.length - 1; i++) {
+            //判断k1 ！=k2 即可
+            int x1 = coordinates[i][0] - coordinates[i - 1][0];
+            int y1 = coordinates[i][1] - coordinates[i - 1][1];
+            int x2 = coordinates[i + 1][0] - coordinates[i][0];
+            int y2 = coordinates[i + 1][1] - coordinates[i][1];
+            if (y1 * x2 != y2 * x1) {
+                return false;
             }
-            //判断是否都在同一纵坐标上
-            if (coordinates[i - 1][1] == coordinates[i][1]) {
-                l--;
-                continue;
-            }
-            //判断斜线 斜率是否相等
-            if ((coordinates[i][0] * coordinates[i - 1][1]) - (coordinates[i - 1][0] * coordinates[i][1]) == 0) {
-                l--;
-            }
-        }
-        if (l != 0) {
-            return false;
         }
         return true;
     }
